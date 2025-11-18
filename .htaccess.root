@@ -1,0 +1,29 @@
+# .htaccess untuk Root Directory (jika document root adalah public_html/)
+# Copy file ini ke root public_html/ dan rename menjadi .htaccess
+# Hanya gunakan jika struktur folder Anda:
+# public_html/
+# ├── app/
+# ├── public/
+# │   └── index.php
+# └── ...
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirect semua request ke folder public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Protect .env file
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Protect sensitive files
+<FilesMatch "^(composer\.(json|lock)|package(-lock)?\.json|\.git)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
