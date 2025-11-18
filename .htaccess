@@ -1,0 +1,14 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirect semua request ke folder public/
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Protect sensitive files
+<FilesMatch "^(\.env|\.git|composer\.(json|lock)|package(-lock)?\.json)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
